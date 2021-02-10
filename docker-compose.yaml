@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  awsservices:
+    container_name: awsservices
+    image: localstack/localstack:latest
+    ports:
+      - "4566:4566" # Edge router
+    environment:
+      - DEBUG=1
+      - SERVICES=s3,lambda
+      - LAMBDA_EXECUTOR=docker-reuse
+      - LAMBDA_DOCKER_NETWORK=aws_local_dev_setup_default
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
